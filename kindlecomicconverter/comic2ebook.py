@@ -549,6 +549,7 @@ def buildEPUB(path, chapternames, tomenumber):
 
 
 def imgDirectoryProcessing(path):
+    """ TODO: inject hacks here """
     global workerPool, workerOutput
     workerPool = Pool(maxtasksperchild=100)
     workerOutput = []
@@ -558,6 +559,7 @@ def imgDirectoryProcessing(path):
     pagenumber = 0
     for dirpath, _, filenames in os.walk(path):
         for afile in filenames:
+            print(afile)
             pagenumber += 1
             work.append([afile, dirpath, options])
     if GUI:
@@ -597,6 +599,7 @@ def imgFileProcessingTick(output):
 
 
 def imgFileProcessing(work):
+    """ TODO: this is the file processing """
     try:
         afile = work[0]
         dirpath = work[1]
@@ -1151,10 +1154,11 @@ def makeBook(source, qtgui=None):
         GUI.progressBarTick.emit('1')
     else:
         checkTools(source)
+    print(gettempdir())
     checkPre(source)
     print("Preparing source images...")
     path = getWorkFolder(source)
-    print("Checking images...")
+    print(f"Checking images...{path}")
     getComicInfo(os.path.join(path, "OEBPS", "Images"), source)
     detectCorruption(os.path.join(path, "OEBPS", "Images"), source)
     if options.webtoon:
